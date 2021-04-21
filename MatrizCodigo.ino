@@ -74,7 +74,7 @@ int PLAY[] = {4,12,28,60,60,28,12,4};
 void verificacion();
 void apagar();
 void imagen(char);
-void publik(char *, int);
+void publik(char *, int, float);
 
 void setup(){
   // Entradas y registros 
@@ -85,49 +85,88 @@ void setup(){
   }
   
   Serial.begin(9600);
-  /*
-  Serial.print("Ingrese una letra A-Z: ");  //Se debe de modificar (MENU)
-  Serial.println();*/
+  Serial.println("1. Verificar  2. Imagen   3. Patrones consecutivos");
   
-  delay(1000); //Tiempo para que muestre la funcion de verificacion
-  verificacion();
-  delay(50);
-  apagar();
-
 }
 
 
 void loop(){
-
-  int cantP;
-  float tmp;
+  
+  int op;
   
   delay(1000);
-  while(Serial.available()>0){ //Recibir la cantidad de protrones
-    cantP=Serial.parseInt(); 
-    Serial.println(cantP);
-  }
+  while(Serial.available()>0){
+  	op=Serial.parseInt();
   
-  delay(1000);
-  while(Serial.available()>0){ //Para ingresarlo se pone .
-    tmp=Serial.parseFloat();
-    Serial.println(tmp);
-  }
+    switch (op){
+      
+      case 1:
+      delay(1000); //Tiempo para que muestre la funcion de verificacion
+      verificacion();
+      delay(1000);
+      apagar();
+      
+      break;
+      
+      case 2:
+      Serial.println("Ingrese el patron: ");
+      delay(1000);
+      while(Serial.available()>0){
+        char crt=Serial.read();
+        delay(1000);
+        imagen(crt);
+        crt='\0';
+      }
 
-  char patrones[10];
-  for(int i=0; i<cantP; i++){
-    delay(1000);
-    while(Serial.available()>0){
-      char car=Serial.read();
-      patrones[i]=car;
-      Serial.println(patrones[i]);
+      break;
+      
+      case 3:
+      
+      int cantP;
+      float tmp;
+	
+      Serial.println("Ingrese la cantidad de patrones a mostrar: ");
+      delay(1000);
+      while(Serial.available()>0){ //Recibir la cantidad de protrones
+        cantP=Serial.parseInt(); 
+        Serial.println(cantP);
+      }
+	
+      Serial.println("Ingrese el tiempo entre los patrones: ");
+      delay(1000);
+      while(Serial.available()>0){ //Para ingresarlo se pone .
+        tmp=Serial.parseFloat();
+        Serial.println(tmp);
+      }
+
+      char patrones[10];
+      Serial.println("Ingrese patrones: ");
+      for(int i=0; i<cantP; i++){
+        delay(1000);
+        while(Serial.available()>0){
+          char car=Serial.read();
+          patrones[i]=car;
+          Serial.println(patrones[i]);
+        }
+      }
+      publik(patrones, cantP, tmp);
+
+      break;
+      
+      default:
+      
+      Serial.println("No se encontro la opcion ingresada");
+      
+      break;
+
     }
-  }
-  Serial.println("Datos recibidos.");
 
+  }
+  
 }
   
 void verificacion(){
+  
   int matriz[]={255,255,255,255,255,255,255,255};
   
   for(int i=0; i<8; i++){
@@ -136,7 +175,6 @@ void verificacion(){
     shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
     digitalWrite(RCLKF,HIGH);
   }
-  
 }
 
 void apagar(){
@@ -151,11 +189,10 @@ void apagar(){
 }
 
 void publik(char *array, int n, float t){
-	
+  int tiempo=t*1000;
   for(int s=0; s<n; s++){
     imagen(array[s]);
-    delay(t);
-  
+    delay(tiempo);
   }
 
 }
@@ -561,6 +598,10 @@ void imagen(char let){
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
       digitalWrite(RCLKF,HIGH);    
     }
+    break;
+    
+    default:
+    Serial.print("Patron ingresa invalido.");
     break;
   }
 
