@@ -2,22 +2,31 @@
 /*
 El presente circuito es la implementación de una matriz 8x8 junto con el circuito integrado 74HC595.
 
-Además, se van a mostrar los siguientes caracteres:
+Es importante tener en cuenta como serán las entradas por la terminar y así tener un  
+funcionamiento correcto. 
+
+Inicialmente se desplegará un menu con las siguientes opciones:
+
+-Verificar: Le permitirá ver que todos los led se encienden.
+-Imagen: Le permitirá ver un patron que desee.
+-Pubick: Le permitirá ver una secuencia de patrones.
+
+Siga las instrucciones que se le van mostrando en pantalla.
+
+Por otro lado, los patrones predeterminados que hay son:
 
 - Números (0-9): Ingrese el numero que quiere ver 
-- Letras (A-Z) exceptuando Ñ; para ello ingrese la letra que quiere ver en mayúscula.
-- Caracteres especiales: corazón , rombo , ►. 
+- Letras (A-Z): exceptuando Ñ; para ello ingrese la letra que quiere ver en mayúscula.
+- Caracteres especiales: corazón , rombo , ►. Para verlos haga lo siguiente:
   Si va a imprimir el corazón ingrese h, para el rombo ingrese r y para ► ingrese p
-  
-  
 
-
-
+Para cuando se desee ejecutar la opción 3 del menu se recomienda esperar a que el programa
+imprima el carácter o número ingresado con el fin de que se ejecute correctamente.
 
 */
 
 
-//----------------Pines---------------------------------------------------------------------------
+//----------------------------Pines---------------------------------------------------------------
 int SERF = 2; //Entrada 
 int SRCLKF = 4; //Registro de entrada 
 int RCLKF = 3; // Registro de salida 
@@ -25,7 +34,8 @@ int RCLKF = 3; // Registro de salida
 //Arreglo para recorrer las filas
 
 int Filas[] = {127, 191, 223, 239, 247, 251, 253, 254};
-//Caracteres a mostra
+
+//Caracteres a mostrar
 
 int A[] = {0,60,102,102,126,102,102,102};
 int B[] = {120,72,72,112,72,68,68,124};
@@ -70,11 +80,13 @@ int N0[] = {60, 195, 227, 211, 203,199, 195, 60};
 int CORAZON[] = {0,54,127,127,62,28,8,0};
 int ROMBO[] = {8, 28,62,127,127,62,28,8};
 int PLAY[] = {4,12,28,60,60,28,12,4};
- 
+
+//Prototipos Funciones
 void verificacion();
 void apagar();
 void imagen(char);
 void publik(char *, int, float);
+
 
 void setup(){
   // Entradas y registros 
@@ -92,48 +104,48 @@ void setup(){
 
 void loop(){
   
+  //MENU DE OPCIONES
   int op;
   
-  delay(1000);
+  delay(2000);
   while(Serial.available()>0){
   	op=Serial.parseInt();
   
     switch (op){
       
-      case 1:
-      delay(1000); //Tiempo para que muestre la funcion de verificacion
+      case 1: //Verificacion
+      //delay(1000); //Tiempo para que muestre la funcion de verificacion
       verificacion();
-      delay(1000);
       apagar();
       
       break;
       
-      case 2:
+      case 2: //Imagen
       Serial.println("Ingrese el patron: ");
-      delay(1000);
+      delay(3000);
       while(Serial.available()>0){
         char crt=Serial.read();
-        delay(1000);
         imagen(crt);
+        apagar();
         crt='\0';
       }
 
       break;
       
-      case 3:
+      case 3: //Publik
       
       int cantP;
       float tmp;
 	
       Serial.println("Ingrese la cantidad de patrones a mostrar: ");
-      delay(1000);
+      delay(3000);
       while(Serial.available()>0){ //Recibir la cantidad de protrones
         cantP=Serial.parseInt(); 
         Serial.println(cantP);
       }
 	
       Serial.println("Ingrese el tiempo entre los patrones: ");
-      delay(1000);
+      delay(3000);
       while(Serial.available()>0){ //Para ingresarlo se pone .
         tmp=Serial.parseFloat();
         Serial.println(tmp);
@@ -142,7 +154,7 @@ void loop(){
       char patrones[10];
       Serial.println("Ingrese patrones: ");
       for(int i=0; i<cantP; i++){
-        delay(1000);
+        delay(3000);
         while(Serial.available()>0){
           char car=Serial.read();
           patrones[i]=car;
@@ -150,7 +162,7 @@ void loop(){
         }
       }
       publik(patrones, cantP, tmp);
-
+      apagar();
       break;
       
       default:
@@ -158,39 +170,39 @@ void loop(){
       Serial.println("No se encontro la opcion ingresada");
       
       break;
-
     }
-
   }
-  
 }
   
 void verificacion(){
   
-  int matriz[]={255,255,255,255,255,255,255,255};
+  int *matriz = new int [8]{255,255,255,255,255,255,255,255};
   
   for(int i=0; i<8; i++){
     digitalWrite(RCLKF,LOW);
     shiftOut(SERF, SRCLKF, LSBFIRST, matriz[i]);
     shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
     digitalWrite(RCLKF,HIGH);
+    delay(200);
   }
+  delete[] matriz;
 }
 
 void apagar(){
-  int matriz[]={0,0,0,0,0,0,0,0};
+  int *matriz = new int [8]{0,0,0,0,0,0,0,0};
   for(int i=0; i<8; i++){
     digitalWrite(RCLKF,LOW);
-    shiftOut(SERF, SRCLKF, MSBFIRST, matriz[i]);
+    shiftOut(SERF, SRCLKF, LSBFIRST, matriz[i]);
     shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
     digitalWrite(RCLKF,HIGH);
   }
-  
+  delete[] matriz;
 }
 
 void publik(char *array, int n, float t){
   int tiempo=t*1000;
   for(int s=0; s<n; s++){
+    delay(tiempo);
     imagen(array[s]);
     delay(tiempo);
   }
@@ -200,15 +212,28 @@ void publik(char *array, int n, float t){
 void imagen(char let){
   switch (let){
     
+    case '0':
+    for(int i=0; i<8; i++){
+
+      digitalWrite(RCLKF,LOW);    
+      shiftOut(SERF, SRCLKF, MSBFIRST, N1[i]);
+      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
+    }
+  	apagar();
+    break;
+    
     case '1':
     for(int i=0; i<8; i++){
 
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, N1[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
-  
+  	apagar();
     break;
     
     case '2':
@@ -217,7 +242,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, N2[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);   
+      delay(200);
     }
   
     break;
@@ -229,6 +255,7 @@ void imagen(char let){
       shiftOut(SERF, SRCLKF, MSBFIRST, N3[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
       digitalWrite(RCLKF,HIGH);    
+      delay(200);
     }
   
     break;
@@ -239,7 +266,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, N4[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
   
     break;
@@ -250,7 +278,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, N5[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
   
     break;
@@ -261,7 +290,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, N6[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
   
     break;
@@ -273,6 +303,7 @@ void imagen(char let){
       shiftOut(SERF, SRCLKF, MSBFIRST, N7[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
       digitalWrite(RCLKF,HIGH);    
+      delay(200);
     }
   
     break;
@@ -283,7 +314,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, N8[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
   
     break;
@@ -294,7 +326,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, N9[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
   
     break;
@@ -305,7 +338,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, A[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
   
     break;
@@ -316,7 +350,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, B[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
     break;
     
@@ -326,7 +361,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, C[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
     break;
     
@@ -336,7 +372,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, D[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);  
+      delay(200);
     }
     break;
     
@@ -346,7 +383,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, E[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
     break;
 
@@ -356,7 +394,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, F[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);   
+      delay(200);
     }
     break;
     
@@ -366,7 +405,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, G[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);  
+      delay(200);
     }
     break;
     
@@ -377,6 +417,7 @@ void imagen(char let){
       shiftOut(SERF, SRCLKF, LSBFIRST, H[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
       digitalWrite(RCLKF,HIGH);    
+      delay(200);
     }
     break;
     
@@ -386,7 +427,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, I[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
     break;
 
@@ -397,7 +439,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, J[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
     break;
     
@@ -407,7 +450,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, K[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
     break;
     
@@ -417,7 +461,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, L[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
     break;
     
@@ -427,7 +472,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, M[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);  
+      delay(200);
     }
     break;
     
@@ -437,7 +483,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, N[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
   
     break;
@@ -449,6 +496,7 @@ void imagen(char let){
       shiftOut(SERF, SRCLKF, LSBFIRST, O[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
       digitalWrite(RCLKF,HIGH);    
+      delay(200);
     }
   
     break;
@@ -459,7 +507,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, P[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);   
+      delay(200);
     }
 
     break;
@@ -470,7 +519,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, Q[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
 
     break;
@@ -481,7 +531,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, R[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
 
     break;
@@ -492,7 +543,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, S[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
 
     break;
@@ -503,7 +555,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, T[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
 
     break;
@@ -514,7 +567,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);   
       shiftOut(SERF, SRCLKF, LSBFIRST, U[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
 
     break;
@@ -525,7 +579,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, V[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
 
     break;
@@ -536,7 +591,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, W[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);  
+      delay(200);
     }
 
     break;
@@ -547,7 +603,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, X[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
 
     break;
@@ -558,7 +615,8 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, Y[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
   
     break;
@@ -568,35 +626,41 @@ void imagen(char let){
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, LSBFIRST, Z[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);  
+      delay(200);
     } 
     break; 
     
-    case 'h':
+    case 'h': //CORAZON
     for(int i=0; i<8; i++){
 
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, CORAZON[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
       digitalWrite(RCLKF,HIGH);    
+      delay(200);
     }
     break;
-    case 'r':
+    
+    case 'r': //ROMBO
     for(int i=0; i<8; i++){
 
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, ROMBO[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH);
+      delay(200);
     }
     break;
-    case 'p':
+    
+    case 'p': //SIGNO DE PLAY
     for(int i=0; i<8; i++){
 
       digitalWrite(RCLKF,LOW);    
       shiftOut(SERF, SRCLKF, MSBFIRST, PLAY[i]);
       shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
+      digitalWrite(RCLKF,HIGH); 
+      delay(200);
     }
     break;
     
@@ -606,6 +670,13 @@ void imagen(char let){
   }
 
 }
+
+
+
+
+
+
+
 
 
 
