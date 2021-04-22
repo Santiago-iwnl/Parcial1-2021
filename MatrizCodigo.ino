@@ -5,23 +5,28 @@ El presente circuito es la implementación de una matriz 8x8 junto con el circui
 Es importante tener en cuenta como serán las entradas por la terminar y así tener un  
 funcionamiento correcto. 
 
-Inicialmente se desplegará un menu con las siguientes opciones:
+Inicialmente se desplegará un menú con las siguientes opciones:
 
 -Verificar: Le permitirá ver que todos los led se encienden.
 -Imagen: Le permitirá ver un patron que desee.
--Pubick: Le permitirá ver una secuencia de patrones.
+-Publick: Le permitirá ver una secuencia de patrones, escogidos por usted.
 
 Siga las instrucciones que se le van mostrando en pantalla.
 
-Por otro lado, los patrones predeterminados que hay son:
+Este programa cuenta con una serie de restricciones al momento de elegir 
+los patrones a visualizar a continuación se mostraran cuales puede 
+seleccionar.
 
-- Números (0-9): Ingrese el numero que quiere ver 
-- Letras (A-Z): exceptuando Ñ; para ello ingrese la letra que quiere ver en mayúscula.
+Por otro lado, los patrones que se pueden visualizar son:
+
+- Números (0-9): Ingrese el número que quiere ver 
+- Letras (A-Z): exceptuando Ñ; para ello ingrese la letra en mayúscula.
 - Caracteres especiales: corazón , rombo , ►. Para verlos haga lo siguiente:
   Si va a imprimir el corazón ingrese h, para el rombo ingrese r y para ► ingrese p
 
-Para cuando se desee ejecutar la opción 3 del menu se recomienda esperar a que el programa
-imprima el carácter o número ingresado con el fin de que se ejecute correctamente.
+Cuando desee ejecutar la opción 3 del menú se recomienda que al momento de ingresar 
+los patrones que quiere ver en los leds, ingrese el primer patrón y cuando este 
+aparezca ingrese el segundo y así sucesivamente.
 
 */
 
