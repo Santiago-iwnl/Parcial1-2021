@@ -31,6 +31,8 @@ int SERF = 2; //Entrada
 int SRCLKF = 4; //Registro de entrada 
 int RCLKF = 3; // Registro de salida 
 
+int n=0;
+
 //Arreglo para recorrer las filas
 
 int Filas[] = {127, 191, 223, 239, 247, 251, 253, 254};
@@ -96,9 +98,7 @@ void setup(){
     pinMode(puertos[i], OUTPUT);
   }
   
-  Serial.begin(9600);
-  Serial.println("1. Verificar  2. Imagen   3. Patrones consecutivos");
-  
+  Serial.begin(9600);  
 }
 
 
@@ -107,7 +107,9 @@ void loop(){
   //MENU DE OPCIONES
   int op;
   
-  delay(2000);
+  Serial.println("1. Verificar  2. Imagen   3. Patrones consecutivos");
+  
+  delay(3000);
   while(Serial.available()>0){
   	op=Serial.parseInt();
   
@@ -213,475 +215,634 @@ void imagen(char let){
   switch (let){
     
     case '0':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N1[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N0[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
   	apagar();
     break;
     
     case '1':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N1[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N1[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
   	apagar();
     break;
     
     case '2':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N2[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);   
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N2[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
     
     case '3':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N3[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N3[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+  	apagar();
     break;
     
     case '4':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N4[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N4[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
     
     case '5':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N5[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N5[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
     
     case '6':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N6[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N6[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();	
     break;
     
     case '7':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N7[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N7[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
     
     case '8':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N8[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N8[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
     
     case '9':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, N9[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, N9[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
       
     case 'A':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, A[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, A[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
   	
     case 'B':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, B[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, B[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'C':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, C[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, C[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'D':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, D[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);  
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, D[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'E':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, E[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, E[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
 
     case 'F':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, F[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);   
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, F[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'G':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, G[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);  
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, G[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'H':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, H[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, H[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'I':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, I[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, I[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
 
     
     case 'J':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, J[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, J[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'K':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, K[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, K[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'L':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, L[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, L[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'M':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, M[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);  
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, M[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'N':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, N[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, N[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
     
     case 'O':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, O[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, O[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
     
     case 'P':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, P[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);   
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, P[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'Q':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, Q[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, Q[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'R':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, R[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, R[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'S':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, S[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, S[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'T':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, T[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, T[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
 
     case 'U':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);   
-      shiftOut(SERF, SRCLKF, LSBFIRST, U[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, U[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'V':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, V[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, V[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'W':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, W[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);  
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, W[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'X':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, X[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, X[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-
+    n=0;
+    apagar();
     break;
     
     case 'Y':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, Y[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, Y[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
-  
+    n=0;
+    apagar();
     break;
+    
     case 'Z':
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, LSBFIRST, Z[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);  
-      delay(200);
-    } 
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, LSBFIRST, Z[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
+    }
+    n=0;
+    apagar();
     break; 
     
     case 'h': //CORAZON
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, CORAZON[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);    
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, CORAZON[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'r': //ROMBO
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, ROMBO[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH);
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, ROMBO[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     case 'p': //SIGNO DE PLAY
-    for(int i=0; i<8; i++){
+    while(n<10){
+      for(int i=0; i<8; i++){
 
-      digitalWrite(RCLKF,LOW);    
-      shiftOut(SERF, SRCLKF, MSBFIRST, PLAY[i]);
-      shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
-      digitalWrite(RCLKF,HIGH); 
-      delay(200);
+        digitalWrite(RCLKF,LOW);    
+        shiftOut(SERF, SRCLKF, MSBFIRST, PLAY[i]);
+        shiftOut(SERF, SRCLKF, LSBFIRST, Filas[i]);
+        digitalWrite(RCLKF,HIGH); 
+        delay(10);
+      }
+      n++;
     }
+    n=0;
+    apagar();
     break;
     
     default:
-    Serial.print("Patron ingresa invalido.");
+    Serial.println("Patron ingresa invalido.");
     break;
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
